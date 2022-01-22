@@ -1,4 +1,4 @@
-import express from "express";
+const express = require("express");
 // import apiRoutes from './routes/apiRoutes.js'
 // import dotenv from 'dotenv'
 // import authRoutes from './routes/authRoutes.js'
