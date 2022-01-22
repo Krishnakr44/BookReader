@@ -1,23 +1,22 @@
 const express = require("express");
-// import apiRoutes from './routes/apiRoutes.js'
-// import dotenv from 'dotenv'
-// import authRoutes from './routes/authRoutes.js'
-// import dbConnect from './middlewares/db.js'
+const apiRoutes = require("./routes/apiRoutes.js");
+const authRoutes = require("./routes/authRoutes.js");
+const dbConnect = require("./middlewares/db.js");
 
 // import path, { dirname } from 'path'
 // import { fileURLToPath } from 'url'
 //Initialising dotenv
-// dotenv.config()
+require("dotenv").config();
 //Initialising database
-// dbConnect()
+dbConnect();
 
 //Initialising Express
 const app = express();
 app.use(express.json());
 
 //Basic Routes
-// app.use('/api', apiRoutes)
-// app.use('/auth', authRoutes)
+app.use("/api", apiRoutes);
+app.use("/auth", authRoutes);
 
 // const __dirname = dirname(fileURLToPath(import.meta.url))
 
