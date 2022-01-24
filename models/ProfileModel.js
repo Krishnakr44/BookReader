@@ -14,10 +14,9 @@ const ProfileSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  fav_genre: [
+  fav_genre: {
     type: Schema.Types.ObjectId,
-    ref: "Genre"
-  ]
+    ref: "Genre",
   },
   points: {
     type: Number,

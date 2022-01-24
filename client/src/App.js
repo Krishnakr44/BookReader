@@ -5,6 +5,7 @@ import Header from "./components/Header/Header";
 import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import LoginScreen from "./screens/LoginScreen/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen/RegisterScreen";
+import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 
 const App = () => {
   const [isAuth, setIsAuth] = useState(false);
@@ -23,6 +24,11 @@ const App = () => {
           <Route
             path="/login"
             element={<LoginScreen isAuth={isAuth} setIsAuth={setIsAuth} />}
+          />
+
+          <Route
+            path="/profile"
+            element={<ProfileScreen isAuth={isAuth} setIsAuth={setIsAuth} />}
           />
         </Routes>
       </main>
