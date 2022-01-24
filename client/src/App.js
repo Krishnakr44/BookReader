@@ -11,19 +11,21 @@ const App = () => {
   return (
     <div>
       <header>
-        <Header />
+        <Header isAuth={isAuth} setIsAuth={setIsAuth} />
       </header>
-      <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route
-          path="/register"
-          element={<RegisterScreen isAuth={isAuth} setIsAuth={setIsAuth} />}
-        />
-        <Route
-          path="/login"
-          element={<LoginScreen isAuth={isAuth} setIsAuth={setIsAuth} />}
-        />
-      </Routes>
+      <main>
+        <Routes>
+          <Route path="/" element={<HomeScreen />} />
+          <Route
+            path="/register"
+            element={<RegisterScreen isAuth={isAuth} setIsAuth={setIsAuth} />}
+          />
+          <Route
+            path="/login"
+            element={<LoginScreen isAuth={isAuth} setIsAuth={setIsAuth} />}
+          />
+        </Routes>
+      </main>
       <footer>
         <Footer />
       </footer>
