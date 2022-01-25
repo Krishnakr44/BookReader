@@ -8,14 +8,14 @@ const Footer = () => {
         <Row className="footer-text">
           <Col>
             <p>
-              Welcome to Study+. We make education easy and interesting. Gone
-              are the days where you learn by cramming.
+              Welcome to 7Book. Sharing Books is made easy and fun with 7Book.
+              Get Loyalty points to earn real ethereum.
             </p>
           </Col>
           <Col>
             <p>
-              Now learn with Augmented Reality and experience depths of
-              knowledge. Chat with your peers and feel live classroom
+              Connect with your nearest Book lover and share your favourite
+              books!
             </p>
           </Col>
           <Col>
@@ -34,7 +34,7 @@ const Footer = () => {
         </Row>
         <Row>
           <Col className="text-center">
-            <p>Copyright &copy; 2021 Study+</p>
+            <p>Copyright &copy; 2021 7Book</p>
           </Col>
         </Row>
       </Container>

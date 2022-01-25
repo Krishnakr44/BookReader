@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { useAlert } from "react-alert";
-const RegisterScreen = ({ setIsAuth, setIsTeacher }) => {
+import { useNavigate } from "react-router-dom";
+
+const RegisterScreen = ({ setIsAuth }) => {
+  let navigate = useNavigate();
+
   const alert = useAlert();
   const [formData, setFormData] = useState({
     name: "",
@@ -20,9 +24,7 @@ const RegisterScreen = ({ setIsAuth, setIsTeacher }) => {
       localStorage.setItem("userInfo", JSON.stringify(user.data));
       if (user.status === 201) {
         setIsAuth(true);
-        // if (user.data.isTeacher) {
-        //   setIsTeacher(true);
-        // } else setIsTeacher(false);
+        navigate("/");
         alert.show("Registration Successful", { type: "success" });
       }
     } catch (err) {

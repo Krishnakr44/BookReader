@@ -11,11 +11,12 @@ const ProfileSchema = new mongoose.Schema({
     type: Number,
   },
   user_id: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: true,
   },
   fav_genre: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Genre",
   },
   points: {
@@ -24,5 +25,5 @@ const ProfileSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("User", ProfileSchema);
-module.exports = User;
+const Profile = mongoose.model("Profile", ProfileSchema);
+module.exports = Profile;

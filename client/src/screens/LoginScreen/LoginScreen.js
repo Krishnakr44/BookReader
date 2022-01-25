@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { useAlert } from "react-alert";
+import { useNavigate } from "react-router-dom";
 
-const LoginScreen = ({ setIsAuth }) => {
+const LoginScreen = ({ setIsAuth, setProfileFilled }) => {
+  let navigate = useNavigate();
+
   const alert = useAlert();
   const [formData, setFormData] = useState({
     email: "",
@@ -18,10 +21,11 @@ const LoginScreen = ({ setIsAuth }) => {
       });
       localStorage.setItem("userInfo", JSON.stringify(user.data));
       if (user.status === 201) {
+        if (user.data.isProfile) {
+          setProfileFilled(true);
+          navigate("/");
+        } else setProfileFilled(false);
         setIsAuth(true);
-        // if (user.data.isTeacher) {
-        //   setIsTeacher(true);
-        // } else setIsTeacher(false);
         alert.show("Login Success", { type: "success" });
       }
     } catch (err) {

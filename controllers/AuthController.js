@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
-const User = require("../models/userModel.js");
+const User = require("../models/UserModel.js");
+const Profile = require("../models/ProfileModel");
 const generateToken = require("../util/generateToken.js");
 
 exports.loginController = async (req, res) => {
@@ -14,13 +15,15 @@ exports.loginController = async (req, res) => {
   }
 
   const token = generateToken(user.id);
-
+  const profile = await Profile.findOne({ user_id: user._id });
+  let isProfile = false;
+  if (profile) isProfile = true;
   return res.status(201).json({
     _id: user._id,
     name: user.name,
     email: user.email,
     isAdmin: user.isAdmin,
-    isTeacher: user.isTeacher,
+    isProfile: isProfile,
     token: token,
   });
 };
@@ -60,31 +63,30 @@ exports.registerController = async (req, res) => {
 };
 
 exports.profileController = async (req, res) => {
-  const { name, email, password } = req.body;
-  const user = await User.findOne({ email });
-  if (user) {
-    return res.status(401).json({ message: "User already exists" });
+  const { location, latitude, longitude, user_id, fav_genre } = req.body;
+  const profile = await Profile.findOne({ user_id });
+  if (profile) {
+    return res.status(401).json({ message: "Profile already exists" });
   }
-  const hashedPassword = await bcrypt.hash(password, 10);
-  User.create(
+  console.log(location, latitude, longitude, user_id, fav_genre);
+  Profile.create(
     {
-      name,
-      email,
-      password: hashedPassword,
+      location,
+      latitude,
+      longitude,
+      user_id,
+      fav_genre,
     },
-    (err, user) => {
+    (err, profile) => {
       if (err) {
         return res.status(500).json({ message: `${err}` });
       }
-      if (user) {
+      if (profile) {
         return res.status(201).json({
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          isAdmin: user.isAdmin,
+          profile,
         });
       } else {
-        return res.status(400).json({ message: "Invalid user data" });
+        return res.status(400).json({ message: "Invalid Profile data" });
       }
     }
   );
