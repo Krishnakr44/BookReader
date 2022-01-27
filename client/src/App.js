@@ -6,9 +6,11 @@ import HomeScreen from "./screens/HomeScreen/HomeScreen";
 import LoginScreen from "./screens/LoginScreen/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
+import PostScreen from "./screens/PostScreen/PostScreen";
 import { useNavigate } from "react-router-dom";
 import AddPostScreen from "./screens/AddPostScreen/AddPostScreen";
 import axios from "axios";
+import AddImageScreen from "./screens/AddImageScreen/AddImageScreen";
 const App = () => {
   let navigate = useNavigate();
 
@@ -47,6 +49,9 @@ const App = () => {
       </header>
       <main>
         <Routes>
+          <Route exact path="/post/:id" element={<PostScreen />} />
+          <Route exact path="/addimage/:id" element={<AddImageScreen />} />
+
           <Route path="/" element={<HomeScreen />} />
           <Route path="/addpost" element={<AddPostScreen />} />
           <Route

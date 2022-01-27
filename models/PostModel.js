@@ -28,6 +28,9 @@ const PostSchema = new mongoose.Schema(
         ref: "Genre",
       },
     ],
+    imageUri: {
+      type: String,
+    },
   },
 
   { timestamps: true }
