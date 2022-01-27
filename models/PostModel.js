@@ -9,13 +9,27 @@ const PostSchema = new mongoose.Schema(
     desc: {
       type: String,
       required: true,
-      unique: true,
     },
-    profile_id: {
-      type: Schema.Types.ObjectId,
-      ref: "Profile",
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
+    bookTitle: {
+      type: String,
+      required: true,
+    },
+    author: {
+      type: String,
+      required: true,
+    },
+    genre_id: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Genre",
+      },
+    ],
   },
+
   { timestamps: true }
 );
 

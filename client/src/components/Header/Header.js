@@ -36,6 +36,12 @@ const Header = ({ isAuth, setIsAuth }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto me-3">
+            <LinkContainer to="/addpost">
+              <Nav.Link className="px-3">
+                <FontAwesomeIcon icon={faPlus} />
+                Add Post
+              </Nav.Link>
+            </LinkContainer>
             {isAuth ? (
               <Nav.Link className="px-3" onClick={() => Logout()}>
                 {" "}

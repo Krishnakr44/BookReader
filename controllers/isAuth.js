@@ -1,12 +1,9 @@
-import jwt from "jsonwebtoken";
-import User from "../models/userModel.js";
+const jwt = require("jsonwebtoken");
+const User = require("../models/UserModel.js");
+const Profile = require("../models/ProfileModel");
 
-export const isAuth = async (req, res) => {
+module.exports = isAuth = async (req, res) => {
   try {
-    // console.log(req.body)
-    // console.log(req.authorization)
-    // console.log(req.headers)
-    // console.log(req.config)
     const token = req.headers.authorization.split(" ")[1];
     jwt.verify(token, process.env.JWT_KEY, async (err, decoded) => {
       if (err) {
@@ -14,7 +11,10 @@ export const isAuth = async (req, res) => {
       } else {
         const user = await User.findOne(decoded._id);
         if (user) {
-          return res.status(201).json({ isAuth: true });
+          const profile = await Profile.findOne({ user_id: user._id });
+          let isProfile = false;
+          if (profile) isProfile = true;
+          return res.status(201).json({ isAuth: true, isProfile: isProfile });
         } else {
           return res.status(401).json({ isAuth: false });
         }

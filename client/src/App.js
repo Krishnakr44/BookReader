@@ -7,7 +7,8 @@ import LoginScreen from "./screens/LoginScreen/LoginScreen";
 import RegisterScreen from "./screens/RegisterScreen/RegisterScreen";
 import ProfileScreen from "./screens/ProfileScreen/ProfileScreen";
 import { useNavigate } from "react-router-dom";
-
+import AddPostScreen from "./screens/AddPostScreen/AddPostScreen";
+import axios from "axios";
 const App = () => {
   let navigate = useNavigate();
 
@@ -18,6 +19,27 @@ const App = () => {
       navigate("/profile");
     }
   }, [profileFilled, isAuth]);
+  useEffect(() => {
+    async function checkAuth() {
+      try {
+        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+        const res = await axios.post("/auth/is_auth", {}, config);
+        setProfileFilled(res.data.isProfile);
+        setIsAuth(res.data.isAuth);
+      } catch (err) {
+        setIsAuth(false);
+      }
+    }
+    checkAuth();
+    return () => {
+      setIsAuth(false);
+    };
+  }, []);
   return (
     <div>
       <header>
@@ -26,6 +48,7 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<HomeScreen />} />
+          <Route path="/addpost" element={<AddPostScreen />} />
           <Route
             path="/register"
             element={<RegisterScreen isAuth={isAuth} setIsAuth={setIsAuth} />}
@@ -34,6 +57,17 @@ const App = () => {
             path="/login"
             element={
               <LoginScreen
+                isAuth={isAuth}
+                setIsAuth={setIsAuth}
+                setProfileFilled={setProfileFilled}
+              />
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+              <ProfileScreen
                 isAuth={isAuth}
                 setIsAuth={setIsAuth}
                 setProfileFilled={setProfileFilled}
