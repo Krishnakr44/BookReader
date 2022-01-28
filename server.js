@@ -12,6 +12,7 @@ dbConnect();
 
 //Initialising Express
 const app = express();
+
 app.use(express.json());
 
 //Basic Routes

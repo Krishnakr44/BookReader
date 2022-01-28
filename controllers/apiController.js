@@ -2,6 +2,8 @@ const Post = require("../models/PostModel");
 
 exports.addPostController = (req, res) => {
   const { title, desc, bookTitle, author, genre } = req.body;
+
+  const imageUri = req.file.filename;
   const genreArray = [];
   for (let i in genre) {
     genreArray.push(genre[i].id);
@@ -15,6 +17,7 @@ exports.addPostController = (req, res) => {
       bookTitle,
       author,
       genre_id: genreArray,
+      imageUri,
     },
     async (err, post) => {
       if (err) {

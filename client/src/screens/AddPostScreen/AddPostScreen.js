@@ -4,7 +4,7 @@ import { Form, Button, Alert } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const AddPostScreen = () => {
+const AddPostScreen = ({ isAuth }) => {
   const [genreArr, setGenreArr] = useState([]);
 
   const [genreList, setGenreList] = useState([
@@ -32,6 +32,7 @@ const AddPostScreen = () => {
   const navigate = useNavigate();
   const alert = useAlert();
   const [formData, setFormData] = useState({
+    photo: "",
     title: "",
     desc: "",
     bookTitle: "",
@@ -47,35 +48,33 @@ const AddPostScreen = () => {
         text: genreList.filter((genre) => genre.id == e.target.value)[0].text,
       },
     ]);
-    console.log(genreArr);
     setGenreList(genreList.filter((genre) => genre.id !== e.target.value));
   };
   useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (!userInfo) {
-      navigate("/login");
-    }
+    // if (!isAuth) {
+    //   navigate("/login");
+    // }
   }, []);
   const addPost = async (e) => {
     e.preventDefault();
+
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const config = {
       headers: {
+        "content-type": "multipart/form-data",
+        Accept: "multipart/form-data",
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
+    let myform = new FormData();
+    myform.append("photo", formData.photo);
+    myform.append("title", formData.title);
+    myform.append("desc", formData.desc);
+    myform.append("bookTitle", formData.bookTitle);
+    myform.append("author", formData.author);
+    myform.append("genre", genreArr);
     try {
-      const post = await axios.post(
-        "/api/add_post",
-        {
-          title: formData.title,
-          desc: formData.desc,
-          bookTitle: formData.bookTitle,
-          author: formData.author,
-          genre: genreArr,
-        },
-        config
-      );
+      const post = await axios.post("/api/add_post", myform, config);
       if (post.status === 201) {
         alert.show("Post Added Successfuly", { type: "success" });
       }
@@ -84,9 +83,28 @@ const AddPostScreen = () => {
       alert.show(msg, { type: "error" });
     }
   };
+  const handlePhoto = (e) => {
+    setFormData({ ...formData, photo: e.target.files[0] });
+  };
   return (
     <div id="mt">
       <h3 className="text-center">Add new Post</h3>
+      <div className="container my-4">
+        <div className="row">
+          <div className="col-lg-6 col-sm-6 text-center uploadphoto">
+            <p>Upload An Image</p>
+          </div>
+
+          <div className="col-lg-6 col-sm-6 text-center">
+            <input
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              name="photo"
+              onChange={handlePhoto}
+            />
+          </div>
+        </div>
+      </div>
       <Form className="w-75 m-auto text-center" onSubmit={addPost}>
         <Form.Group className="my-2" controlId="title">
           <Form.Label>Title</Form.Label>

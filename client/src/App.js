@@ -53,7 +53,7 @@ const App = () => {
           <Route exact path="/addimage/:id" element={<AddImageScreen />} />
 
           <Route path="/" element={<HomeScreen />} />
-          <Route path="/addpost" element={<AddPostScreen />} />
+          <Route path="/addpost" element={<AddPostScreen isAuth={isAuth} />} />
           <Route
             path="/register"
             element={<RegisterScreen isAuth={isAuth} setIsAuth={setIsAuth} />}
