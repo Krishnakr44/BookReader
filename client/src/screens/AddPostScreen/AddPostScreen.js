@@ -40,7 +40,6 @@ const AddPostScreen = ({ isAuth }) => {
     genre: "",
   });
   const handleGenre = (e) => {
-    console.log(e.target.value);
     setGenreArr([
       ...genreArr,
       {
@@ -57,7 +56,6 @@ const AddPostScreen = ({ isAuth }) => {
   }, []);
   const addPost = async (e) => {
     e.preventDefault();
-
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const config = {
       headers: {
@@ -72,7 +70,11 @@ const AddPostScreen = ({ isAuth }) => {
     myform.append("desc", formData.desc);
     myform.append("bookTitle", formData.bookTitle);
     myform.append("author", formData.author);
-    myform.append("genre", genreArr);
+    myform.append(
+      "genre",
+      genreArr.map((gen) => gen.id)
+    );
+    console.log(genreArr.map((gen) => gen.id));
     try {
       const post = await axios.post("/api/add_post", myform, config);
       if (post.status === 201) {

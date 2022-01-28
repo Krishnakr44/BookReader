@@ -5,6 +5,7 @@ import Sidebar from "../../components/Sidebar/Sidebar";
 import Pagination from "../../components/Pagination/Pagination";
 import Loading from "../../components/Loading/Loading";
 import { useAlert } from "react-alert";
+import "./HomeScreen.css";
 const HomeScreen = () => {
   const alert = useAlert();
 
@@ -22,6 +23,7 @@ const HomeScreen = () => {
         let fetch_posts = await axios.get("/api/fetch_posts");
         if (loading) {
           const data = Array.from(fetch_posts.data);
+          console.log(data);
           setLoading(false);
           setPosts(data);
           setPostTitles(data.map((post) => [post.title, post._id]).slice(0, 6));
@@ -49,34 +51,25 @@ const HomeScreen = () => {
 
   //Return value
   return (
-    <>
-      <div className="d-flex notices">
-        <div className="px-5 posts">
-          <div>
-            <Pagination
-              postsPerPage={postsPerPage}
-              totalPosts={posts.length}
-              paginate={paginate}
-            />
-          </div>
-          {posts === null ? (
-            <Loading />
-          ) : posts.length === 0 ? (
-            <h2>No Posts Available</h2>
-          ) : (
-            <Post posts={currentPosts} loading={loading} />
-          )}
-          <Pagination
-            postsPerPage={postsPerPage}
-            totalPosts={posts.length}
-            paginate={paginate}
-          />
-        </div>
-        <div className="sidebar mx-5">
-          <Sidebar postTitles={postTitles} />
-        </div>
+    <div className="d-flex">
+      <div className="px-5 posts">
+        {posts === null ? (
+          <Loading />
+        ) : posts.length === 0 ? (
+          <Loading />
+        ) : (
+          <Post posts={currentPosts} loading={loading} />
+        )}
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={posts.length}
+          paginate={paginate}
+        />
       </div>
-    </>
+      <div className="sidebar mx-5">
+        <Sidebar postTitles={postTitles} />
+      </div>
+    </div>
   );
 };
 

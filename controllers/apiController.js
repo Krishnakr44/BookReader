@@ -1,33 +1,7 @@
 const Post = require("../models/PostModel");
-
-exports.addPostController = (req, res) => {
-  const { title, desc, bookTitle, author, genre } = req.body;
-
-  const imageUri = req.file.filename;
-  const genreArray = [];
-  for (let i in genre) {
-    genreArray.push(genre[i].id);
-  }
-  console.log(genreArray);
-  Post.create(
-    {
-      title,
-      desc,
-      user_id: String(req.user._id),
-      bookTitle,
-      author,
-      genre_id: genreArray,
-      imageUri,
-    },
-    async (err, post) => {
-      if (err) {
-        console.log(err);
-        return res.status(400).json({ message: "Invalid post data" });
-      }
-      return res.status(201).json({ message: "Post Added Successfuly" });
-    }
-  );
-};
+const { dataUri } = require("../middlewares/multer");
+const { uploader } = require("../config/cloudinaryConfig");
+const express = require("express");
 const genreList = [
   { id: "61f0132429cbf76c5b4c7ebf", text: "Adult Fiction" },
   { id: "61f0133329cbf76c5b4c7ec0", text: "Horror" },
@@ -50,6 +24,48 @@ const genreList = [
   { id: "61f013b629cbf76c5b4c7ed1", text: "Humor and Comedy" },
   { id: "61f013c129cbf76c5b4c7ed2", text: "Memoir" },
 ];
+exports.addPostController = (req, res) => {
+  const { title, desc, bookTitle, author, genre } = req.body;
+  let genArr = genre.split(",");
+  if (req.file) {
+    const file = dataUri(req).content;
+    return uploader
+      .upload(file)
+      .then((result) => {
+        const imageUri = result.url;
+        console.log(genre);
+        console.log(typeof genre);
+        console.log(genArr);
+        Post.create(
+          {
+            title,
+            desc,
+            user_id: String(req.user._id),
+            bookTitle,
+            author,
+            genre_id: genArr,
+            imageUri,
+          },
+          async (err, post) => {
+            if (err) {
+              console.log(err);
+              return res.status(400).json({ message: "Invalid post data" });
+            }
+            return res.status(201).json({ message: "Post Added Successfuly" });
+          }
+        );
+      })
+      .catch((err) =>
+        res.status(400).json({
+          messge: "something went wrong while processing your request",
+          data: {
+            err,
+          },
+        })
+      );
+  }
+};
+
 exports.fetchPosts = async (req, res) => {
   try {
     const posts = await Post.find({}).sort({ createdAt: -1 }).lean();
