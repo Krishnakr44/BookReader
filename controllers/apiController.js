@@ -1,7 +1,6 @@
 const Post = require("../models/PostModel");
 const { dataUri } = require("../middlewares/multer");
 const { uploader } = require("../config/cloudinaryConfig");
-const express = require("express");
 const genreList = [
   { id: "61f0132429cbf76c5b4c7ebf", text: "Adult Fiction" },
   { id: "61f0133329cbf76c5b4c7ec0", text: "Horror" },
@@ -25,7 +24,7 @@ const genreList = [
   { id: "61f013c129cbf76c5b4c7ed2", text: "Memoir" },
 ];
 exports.addPostController = (req, res) => {
-  const { title, desc, bookTitle, author, genre } = req.body;
+  const { title, desc, bookTitle, author, interest, genre } = req.body;
   let genArr = genre.split(",");
   if (req.file) {
     const file = dataUri(req).content;
@@ -44,6 +43,7 @@ exports.addPostController = (req, res) => {
             bookTitle,
             author,
             genre_id: genArr,
+            interest,
             imageUri,
           },
           async (err, post) => {
@@ -102,5 +102,69 @@ exports.fetchPost = async (req, res) => {
     }
   } catch (err) {
     return res.status(500).json({ message: "Some Error Occured" });
+  }
+};
+
+exports.myPosts = async (req, res) => {
+  if (req.user) {
+    try {
+      const myposts = await Post.find({ user_id: req.user.id }).lean();
+      for (let i in myposts) {
+        let genreArr = [];
+        myposts[i].genre_id.map((genre) => {
+          genreArr.push(genreList.filter((gen) => gen.id == genre)[0]);
+        });
+        myposts[i] = {
+          ...myposts[i],
+          genArr: genreArr,
+        };
+      }
+      return res.status(201).send(myposts);
+    } catch (err) {
+      console.log(err);
+      return res.status(404).send({ message: "No User Found" });
+    }
+  }
+  console.log("No user");
+  return res.status(500).send({ message: "Some Error Occured" });
+};
+
+exports.searchPosts = async (req, res) => {
+  try {
+    let { query, category } = req.body;
+    let path;
+    if (category == "Genre") {
+      query = genreList.filter((genre) => genre.text == query)[0].id;
+      path = "genre_id";
+    } else {
+      switch (category) {
+        case "BookTitle":
+          path = "bookTitle";
+          break;
+        case "Author":
+          path = "author";
+          break;
+        case "PostTitle":
+          path = "title";
+          break;
+      }
+    }
+    // const queryRes = await Post.aggregate([{ $match: { [path]: query } }]);
+    const queryRes = await Post.find({ [path]: query }).lean();
+    for (let i in queryRes) {
+      let genreArr = [];
+      queryRes[i].genre_id.map((genre) => {
+        genreArr.push(genreList.filter((gen) => gen.id == genre)[0]);
+      });
+      queryRes[i] = {
+        ...queryRes[i],
+        genArr: genreArr,
+      };
+    }
+    console.log(queryRes);
+    return res.status(201).json(queryRes);
+  } catch (err) {
+    console.log(err);
+    return res.status(404).send({ message: "No Post Found" });
   }
 };

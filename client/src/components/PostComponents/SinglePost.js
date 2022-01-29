@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { LinkContainer, Card } from "react-router-bootstrap";
 import { Image, Button } from "react-bootstrap";
-
+import { faCommentAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const SinglePost = ({ post }) => {
   useEffect(() => {});
   return (
@@ -32,6 +33,13 @@ const SinglePost = ({ post }) => {
                 </Button>
               );
             })}
+          </div>
+          <div className="ms-auto me-5 chat">
+            <FontAwesomeIcon
+              icon={faCommentAlt}
+              style={{ marginRight: "0.5em" }}
+            />
+            Chat
           </div>
         </div>
       </div>

@@ -4,12 +4,9 @@ import { LinkContainer } from "react-router-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlus,
-  faQuestionCircle,
   faSignInAlt,
   faUserPlus,
-  faDesktop,
-  faHandsHelping,
-  faPhone,
+  faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import siteLogo from "../../siteLogo.png";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +17,6 @@ const Header = ({ isAuth, setIsAuth }) => {
   const Logout = () => {
     localStorage.removeItem("userInfo");
     setIsAuth(false);
-    navigate("/login");
   };
   return (
     <>
@@ -36,6 +32,12 @@ const Header = ({ isAuth, setIsAuth }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto me-3">
+            <LinkContainer to="/">
+              <Nav.Link className="px-3">
+                <FontAwesomeIcon icon={faHome} />
+                Home
+              </Nav.Link>
+            </LinkContainer>
             <LinkContainer to="/addpost">
               <Nav.Link className="px-3">
                 <FontAwesomeIcon icon={faPlus} />

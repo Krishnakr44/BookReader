@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { LinkContainer, Card } from "react-router-bootstrap";
+import React from "react";
+import { LinkContainer } from "react-router-bootstrap";
 import { Image, Button } from "react-bootstrap";
 import "./PostComponents.css";
-const Post = ({ posts }) => {
+import { faCommentAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const Post = ({ posts, heading }) => {
   return (
     <>
       <div>
-        <h1 className=" text-center mt-3">Recent Posts</h1>
+        <h1 className=" text-center mt-3">{heading}</h1>
         <div>
           {posts.map((post) => (
             <div className="singlepost" key={post._id}>
@@ -37,6 +40,14 @@ const Post = ({ posts }) => {
                       </Button>
                     );
                   })}
+                  <p>Interested Book/ Genre: {post.interest}</p>
+                </div>
+                <div className="ms-auto me-5 chat">
+                  <FontAwesomeIcon
+                    icon={faCommentAlt}
+                    style={{ marginRight: "0.5em" }}
+                  />
+                  Chat
                 </div>
               </div>
             </div>

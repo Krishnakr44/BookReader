@@ -11,13 +11,13 @@ import { useNavigate } from "react-router-dom";
 import AddPostScreen from "./screens/AddPostScreen/AddPostScreen";
 import axios from "axios";
 import AddImageScreen from "./screens/AddImageScreen/AddImageScreen";
+import SearchScreen from "./screens/SearchScreen/SearchScreen";
 const App = () => {
   let navigate = useNavigate();
 
   const [isAuth, setIsAuth] = useState(false);
   const [profileFilled, setProfileFilled] = useState(false);
   useEffect(() => {
-    console.log(profileFilled);
     if (!profileFilled && isAuth) {
       navigate("/profile");
     }
@@ -26,7 +26,6 @@ const App = () => {
     async function checkAuth() {
       try {
         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        console.log(userInfo);
         const config = {
           headers: {
             Authorization: `Bearer ${userInfo.token}`,
@@ -53,8 +52,9 @@ const App = () => {
         <Routes>
           <Route exact path="/post/:id" element={<PostScreen />} />
           <Route exact path="/addimage/:id" element={<AddImageScreen />} />
+          <Route exact path="/search" element={<SearchScreen />} />
 
-          <Route path="/" element={<HomeScreen />} />
+          <Route path="/" element={<HomeScreen isAuth={isAuth} />} />
           <Route path="/addpost" element={<AddPostScreen isAuth={isAuth} />} />
           <Route
             path="/register"

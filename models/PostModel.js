@@ -28,6 +28,9 @@ const PostSchema = new mongoose.Schema(
         ref: "Genre",
       },
     ],
+    interest: {
+      type: String,
+    },
     imageUri: {
       type: String,
     },

@@ -37,6 +37,7 @@ const AddPostScreen = ({ isAuth }) => {
     desc: "",
     bookTitle: "",
     author: "",
+    interest: "",
     genre: "",
   });
   const handleGenre = (e) => {
@@ -50,9 +51,9 @@ const AddPostScreen = ({ isAuth }) => {
     setGenreList(genreList.filter((genre) => genre.id !== e.target.value));
   };
   useEffect(() => {
-    // if (!isAuth) {
-    //   navigate("/login");
-    // }
+    if (!isAuth) {
+      navigate("/login");
+    }
   }, []);
   const addPost = async (e) => {
     e.preventDefault();
@@ -70,6 +71,7 @@ const AddPostScreen = ({ isAuth }) => {
     myform.append("desc", formData.desc);
     myform.append("bookTitle", formData.bookTitle);
     myform.append("author", formData.author);
+    myform.append("interest", formData.interest);
     myform.append(
       "genre",
       genreArr.map((gen) => gen.id)
@@ -174,7 +176,17 @@ const AddPostScreen = ({ isAuth }) => {
             })}
           </Form.Select>
         </Form.Group>
-
+        <Form.Group className="my-2" controlId="interest">
+          <Form.Label>Interested Book/ Genre</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter your Interest"
+            value={formData.interest}
+            onChange={(e) =>
+              setFormData({ ...formData, interest: e.target.value })
+            }
+          />
+        </Form.Group>
         <Button className="mt-3" variant="primary" type="submit">
           Submit
         </Button>

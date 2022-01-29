@@ -3,6 +3,8 @@ const {
   addPostController,
   fetchPosts,
   fetchPost,
+  myPosts,
+  searchPosts,
 } = require("../controllers/apiController");
 const protect = require("../middlewares/checkAuth");
 const multer = require("multer");
@@ -33,5 +35,7 @@ router.use("*", cloudinaryConfig);
 router.post("/add_post", protect, multerUploads, addPostController);
 router.get("/fetch_posts", fetchPosts);
 router.post("/fetch_post", fetchPost);
+router.post("/myposts", protect, myPosts);
+router.post("/searchposts", searchPosts);
 
 module.exports = router;
