@@ -9,11 +9,8 @@ import {
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import siteLogo from "../../siteLogo.png";
-import { useNavigate } from "react-router-dom";
 
 const Header = ({ isAuth, setIsAuth }) => {
-  let navigate = useNavigate();
-
   const Logout = () => {
     localStorage.removeItem("userInfo");
     setIsAuth(false);

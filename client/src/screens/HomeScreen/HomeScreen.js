@@ -8,6 +8,7 @@ import { useAlert } from "react-alert";
 import { Tabs, Tab } from "react-bootstrap";
 import "./HomeScreen.css";
 import YourPosts from "./YourPosts";
+import PostNearYouScreen from "../PostsNearYou/PostNearYouScreen";
 const HomeScreen = ({ isAuth }) => {
   const alert = useAlert();
 
@@ -82,7 +83,7 @@ const HomeScreen = ({ isAuth }) => {
             {isAuth ? <YourPosts /> : <h2>Not Logged In</h2>}
           </Tab>
           <Tab eventKey="nearestposts" title="Posts near You">
-            {/* <YourPosts /> */}
+            <PostNearYouScreen />
           </Tab>
         </Tabs>
       </div>

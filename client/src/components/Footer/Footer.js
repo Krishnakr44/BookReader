@@ -26,9 +26,13 @@ const Footer = () => {
               <LinkContainer to="/">
                 <li className="links">Home</li>
               </LinkContainer>
-              <LinkContainer to="/about">
-                <li className="links">About</li>
-              </LinkContainer>
+              <a
+                className="links"
+                href="https://github.com/rharshit82"
+                target="blank"
+              >
+                <li>Github</li>
+              </a>
             </ul>
           </Col>
         </Row>
