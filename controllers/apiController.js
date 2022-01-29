@@ -1,4 +1,5 @@
 const Post = require("../models/PostModel");
+const Profile = require("../models/ProfileModel");
 const { dataUri } = require("../middlewares/multer");
 const { uploader } = require("../config/cloudinaryConfig");
 const genreList = [
@@ -149,7 +150,6 @@ exports.searchPosts = async (req, res) => {
           break;
       }
     }
-    // const queryRes = await Post.aggregate([{ $match: { [path]: query } }]);
     const queryRes = await Post.find({ [path]: query }).lean();
     for (let i in queryRes) {
       let genreArr = [];
@@ -161,10 +161,35 @@ exports.searchPosts = async (req, res) => {
         genArr: genreArr,
       };
     }
-    console.log(queryRes);
     return res.status(201).json(queryRes);
   } catch (err) {
     console.log(err);
     return res.status(404).send({ message: "No Post Found" });
   }
+};
+
+exports.nearPosts = async (req, res) => {
+  try {
+    const { latitude, longitude } = req.body;
+    const agg = Profile.aggregate([
+      { $match: { latitude: { $gte: latitude - 0.5 } } },
+      { $match: { latitude: { $lte: latitude + 0.5 } } },
+      { $match: { longitude: { $gte: longitude - 0.5 } } },
+      { $match: { longitude: { $lte: longitude + 0.5 } } },
+    ]).group({ _id: "$user_id" });
+
+    let posts = [];
+    for await (const doc of agg) {
+      const arr = await Post.find({ user_id: doc._id });
+      for (let i in arr) {
+        posts.push(JSON.parse(JSON.stringify(arr[i])));
+      }
+    }
+    return res.status(201).send(posts);
+  } catch (err) {
+    console.log(err);
+    return res.status(404).send({ message: "No Post Found" });
+  }
+
+  console.log(posts);
 };

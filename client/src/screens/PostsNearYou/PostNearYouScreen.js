@@ -27,7 +27,7 @@ const PostNearYouScreen = ({
           if (isGeolocationEnabled && coords !== null) {
             latitude = coords.latitude;
             longitude = coords.longitude;
-            let fetch_posts = await axios.post("/api/searchposts", {
+            let fetch_posts = await axios.post("/api/nearposts", {
               latitude,
               longitude,
             });
@@ -63,14 +63,8 @@ const PostNearYouScreen = ({
       <div className="">
         {posts === null ? (
           <Loading />
-        ) : posts.length === 0 ? (
-          <div>No Post Found</div>
         ) : (
-          <Post
-            posts={currentPosts}
-            loading={loading}
-            heading="Posts Near You"
-          />
+          <Post posts={currentPosts} loading={loading} />
         )}
         <Pagination
           postsPerPage={postsPerPage}
