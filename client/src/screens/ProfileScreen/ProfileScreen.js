@@ -94,13 +94,15 @@ const ProfileScreen = ({ setProfileFilled }) => {
           />
         </Form.Group>
 
-        <Button onClick={(e) => getLocationFromText(e)}>
+        <Button
+          style={{ marginTop: "1em", marginBottom: "1em" }}
+          onClick={(e) => getLocationFromText(e)}
+        >
           Get Location From Text
         </Button>
-        {location.place_name.length > 0 ? (
+        {location.place_name && location.place_name.length > 0 ? (
           <div>
             <p>Your Location: {location.place_name}</p>
-            <p>Enter name of your location above</p>
           </div>
         ) : null}
 

@@ -13,3 +13,7 @@ main {
 .site-title {
   font-family: "Lobster", cursive;
 }
+
+.links:hover {
+  cursor: pointer;
+}

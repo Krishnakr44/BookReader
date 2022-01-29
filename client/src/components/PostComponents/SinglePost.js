@@ -7,11 +7,9 @@ const SinglePost = ({ post }) => {
   return (
     <div className="w-75">
       <div className="singlepost" key={post._id}>
-        <LinkContainer to={`/post/${post._id}`}>
-          <h2 className="links text-center mt-3">
-            <u>{post.title}</u>
-          </h2>
-        </LinkContainer>
+        <h2 className=" text-center mt-3">
+          <u>{post.title}</u>
+        </h2>
         <div className="d-flex">
           <div style={{ width: "30%", marginLeft: "1em" }}>
             {post.imageUri != undefined ? (

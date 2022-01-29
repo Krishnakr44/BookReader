@@ -3,9 +3,6 @@ import { LinkContainer, Card } from "react-router-bootstrap";
 import { Image, Button } from "react-bootstrap";
 import "./PostComponents.css";
 const Post = ({ posts }) => {
-  useEffect(() => {
-    console.log(posts);
-  });
   return (
     <>
       <div>

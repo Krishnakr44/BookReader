@@ -17,6 +17,7 @@ const App = () => {
   const [isAuth, setIsAuth] = useState(false);
   const [profileFilled, setProfileFilled] = useState(false);
   useEffect(() => {
+    console.log(profileFilled);
     if (!profileFilled && isAuth) {
       navigate("/profile");
     }
@@ -25,6 +26,7 @@ const App = () => {
     async function checkAuth() {
       try {
         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        console.log(userInfo);
         const config = {
           headers: {
             Authorization: `Bearer ${userInfo.token}`,

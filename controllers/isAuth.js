@@ -9,7 +9,7 @@ module.exports = isAuth = async (req, res) => {
       if (err) {
         return res.status(401).json({ isAuth: false });
       } else {
-        const user = await User.findOne(decoded._id);
+        const user = await User.findOne({ _id: decoded.id });
         if (user) {
           const profile = await Profile.findOne({ user_id: user._id });
           let isProfile = false;
