@@ -62,9 +62,11 @@ const PostNearYouScreen = ({
     <div className="px-5 ">
       <div className="">
         {posts === null ? (
-          <Loading />
+          <div>No Post Found</div>
+        ) : posts.length === 0 ? (
+          <div>No Post Found</div>
         ) : (
-          <Post posts={currentPosts} loading={loading} />
+          <Post posts={currentPosts} loading={loading} heading="Post Results" />
         )}
         <Pagination
           postsPerPage={postsPerPage}

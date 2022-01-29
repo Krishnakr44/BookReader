@@ -25,7 +25,6 @@ const HomeScreen = ({ isAuth }) => {
         let fetch_posts = await axios.get("/api/fetch_posts");
         if (loading) {
           const data = Array.from(fetch_posts.data);
-          console.log(data);
 
           setLoading(false);
           setPosts(data);

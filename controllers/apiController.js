@@ -180,10 +180,20 @@ exports.nearPosts = async (req, res) => {
 
     let posts = [];
     for await (const doc of agg) {
-      const arr = await Post.find({ user_id: doc._id });
+      const arr = await Post.find({ user_id: doc._id }).lean();
       for (let i in arr) {
-        posts.push(JSON.parse(JSON.stringify(arr[i])));
+        posts.push(arr[i]);
       }
+    }
+    for (let i in posts) {
+      let genreArr = [];
+      posts[i].genre_id.map((genre) => {
+        genreArr.push(genreList.filter((gen) => gen.id == genre)[0]);
+      });
+      posts[i] = {
+        ...posts[i],
+        genArr: genreArr,
+      };
     }
     return res.status(201).send(posts);
   } catch (err) {
