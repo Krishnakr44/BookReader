@@ -6,18 +6,18 @@ Live Link: https://sevenbook.herokuapp.com/
 This web application is built on MERN Stack. 
 ## Some Libraries Used:
 ### Frontend:
-React Bootstrap: For quick designing
-React Alert: For Showing Alerts
-React Geolocated: For knowing User's Location
-React Router Bootstrap: For adding links to Componens
-React Fontawesome: For Icons
-Axios: For making requests to Backend
+* React Bootstrap: For quick designing
+* React Alert: For Showing Alerts
+* React Geolocated: For knowing User's Location
+* React Router Bootstrap: For adding links to Componens
+* React Fontawesome: For Icons
+* Axios: For making requests to Backend
 
 ### Backend
-Bcrypt: For Password Encryption and Comparison
-Cloudinary: For Storing Images
-DataURI and Multer: For Handling Images & Converting it to String
-jsonwebtoken: For Authentication and Authorization
+* Bcrypt: For Password Encryption and Comparison
+* Cloudinary: For Storing Images
+* DataURI and Multer: For Handling Images & Converting it to String
+* jsonwebtoken: For Authentication and Authorization
 
 
 ## Screenshot
