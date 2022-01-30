@@ -25,4 +25,4 @@ app.get("*", function (request, response) {
   response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
 });
 const PORT = process.env.PORT;
-app.listen(PORT || 5000, () => console.log("Server Running"));
+app.listen(PORT || 80, () => console.log("Server Running"));
