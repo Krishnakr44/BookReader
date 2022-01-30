@@ -19,10 +19,10 @@ app.use("/auth", authRoutes);
 const path = require("path");
 
 // Step 1:
-app.use(express.static(path.resolve(__dirname, "./client/build")));
+app.use(express.static(path.join(__dirname, "client/build")));
 // Step 2:
-app.get("*", function (request, response) {
-  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 const PORT = process.env.PORT;
 app.listen(PORT || 80, () => console.log("Server Running"));
