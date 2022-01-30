@@ -1,11 +1,40 @@
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
 import { LinkContainer } from "react-router-bootstrap";
 import { Image, Button } from "react-bootstrap";
 import "./PostComponents.css";
 import { faCommentAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAlert } from "react-alert";
 
 const Post = ({ posts, heading }) => {
+  const alert = useAlert();
+  // useEffect(() => {
+  //   console.log(posts);
+  // }, []);
+
+  const handleRequest = async (e) => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userInfo) {
+      alert.show("Not Logged In", { type: "error" });
+      return;
+    }
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    try {
+      const postid = e.target.id;
+      const post = await axios.post("/api/requestswap", { postid }, config);
+      if (post.status === 201) {
+        alert.show("Requested", { type: "success" });
+      }
+    } catch (err) {
+      const msg = err.response ? err.response.data.message : err;
+      alert.show(msg, { type: "error" });
+    }
+  };
   return (
     <>
       <div>
@@ -43,11 +72,22 @@ const Post = ({ posts, heading }) => {
                   <p>Interested Book/ Genre: {post.interest}</p>
                 </div>
                 <div className="ms-auto me-5 chat">
-                  <FontAwesomeIcon
-                    icon={faCommentAlt}
-                    style={{ marginRight: "0.5em" }}
-                  />
-                  Chat
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faCommentAlt}
+                      style={{ marginRight: "0.5em" }}
+                    />
+                    Chat
+                  </div>
+                  <Button
+                    // onClick={(e) => setIsRequested(true)}
+                    style={{ marginTop: "1em" }}
+                    variant="warning"
+                    id={post._id}
+                    onClick={handleRequest}
+                  >
+                    Request Swap
+                  </Button>
                 </div>
               </div>
             </div>

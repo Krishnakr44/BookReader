@@ -76,7 +76,6 @@ const AddPostScreen = ({ isAuth }) => {
       "genre",
       genreArr.map((gen) => gen.id)
     );
-    console.log(genreArr.map((gen) => gen.id));
     try {
       const post = await axios.post("/api/add_post", myform, config);
       if (post.status === 201) {

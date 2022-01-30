@@ -7,6 +7,7 @@ import {
   faSignInAlt,
   faUserPlus,
   faHome,
+  faDatabase,
 } from "@fortawesome/free-solid-svg-icons";
 import siteLogo from "../../siteLogo.png";
 
@@ -42,11 +43,20 @@ const Header = ({ isAuth, setIsAuth }) => {
               </Nav.Link>
             </LinkContainer>
             {isAuth ? (
-              <Nav.Link className="px-3" onClick={() => Logout()}>
-                {" "}
-                <FontAwesomeIcon icon={faSignInAlt} />
-                Logout
-              </Nav.Link>
+              <div className="d-flex">
+                <Nav.Link className="px-3" onClick={() => Logout()}>
+                  {" "}
+                  <FontAwesomeIcon icon={faSignInAlt} />
+                  Logout
+                </Nav.Link>
+                <LinkContainer to="/myrequests">
+                  <Nav.Link className="px-3">
+                    {" "}
+                    <FontAwesomeIcon icon={faDatabase} />
+                    My Requests
+                  </Nav.Link>
+                </LinkContainer>
+              </div>
             ) : (
               <>
                 <LinkContainer to="/login">

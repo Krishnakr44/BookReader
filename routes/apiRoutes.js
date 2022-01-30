@@ -6,6 +6,8 @@ const {
   myPosts,
   searchPosts,
   nearPosts,
+  requestSwap,
+  myRequests,
 } = require("../controllers/apiController");
 const protect = require("../middlewares/checkAuth");
 const multer = require("multer");
@@ -39,5 +41,7 @@ router.post("/fetch_post", fetchPost);
 router.post("/myposts", protect, myPosts);
 router.post("/searchposts", searchPosts);
 router.post("/nearposts", nearPosts);
+router.post("/requestswap", protect, requestSwap);
+router.post("/myrequests", protect, myRequests);
 
 module.exports = router;

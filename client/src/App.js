@@ -12,6 +12,7 @@ import AddPostScreen from "./screens/AddPostScreen/AddPostScreen";
 import axios from "axios";
 import AddImageScreen from "./screens/AddImageScreen/AddImageScreen";
 import SearchScreen from "./screens/SearchScreen/SearchScreen";
+import MyRequestsScreen from "./screens/MyRequestsScreen/MyRequestsScreen";
 const App = () => {
   let navigate = useNavigate();
 
@@ -53,6 +54,7 @@ const App = () => {
           <Route exact path="/post/:id" element={<PostScreen />} />
           <Route exact path="/addimage/:id" element={<AddImageScreen />} />
           <Route exact path="/search" element={<SearchScreen />} />
+          <Route exact path="/myrequests" element={<MyRequestsScreen />} />
 
           <Route path="/" element={<HomeScreen isAuth={isAuth} />} />
           <Route path="/addpost" element={<AddPostScreen isAuth={isAuth} />} />

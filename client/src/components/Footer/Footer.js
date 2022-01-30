@@ -9,7 +9,6 @@ const Footer = () => {
           <Col>
             <p>
               Welcome to 7Book. Sharing Books is made easy and fun with 7Book.
-              Get Loyalty points to earn real ethereum.
             </p>
           </Col>
           <Col>

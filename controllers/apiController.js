@@ -1,5 +1,6 @@
 const Post = require("../models/PostModel");
 const Profile = require("../models/ProfileModel");
+const User = require("../models/UserModel");
 const { dataUri } = require("../middlewares/multer");
 const { uploader } = require("../config/cloudinaryConfig");
 const genreList = [
@@ -200,6 +201,33 @@ exports.nearPosts = async (req, res) => {
     console.log(err);
     return res.status(404).send({ message: "No Post Found" });
   }
+};
 
-  console.log(posts);
+exports.requestSwap = async (req, res) => {
+  try {
+    const username = req.user.name;
+    const userid = req.user._id;
+    const { postid } = req.body;
+    const post = await Post.findOne({ _id: postid });
+    const postTitle = post.title;
+    const userTo = post.user_id;
+    const user = await User.findOne({ _id: userTo });
+    if (user._id.equals(userid)) {
+      return res.status(400).send({ message: "Self Request" });
+    }
+    user.postRequests.push({ user: userid, postTitle, username });
+    user.save();
+    return res.status(201).send({ message: "Request Success" });
+  } catch (err) {
+    console.log(err);
+    return res.status(404).send({ message: "Some Error Occured" });
+  }
+};
+
+exports.myRequests = (req, res) => {
+  try {
+    return res.status(201).send(req.user.postRequests);
+  } catch (err) {
+    return res.status(404).send({ message: "Some Error Occured" });
+  }
 };

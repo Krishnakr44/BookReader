@@ -19,6 +19,16 @@ const UserSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
+  postRequests: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+      postTitle: String,
+      username: String,
+    },
+  ],
 });
 
 const User = mongoose.model("User", UserSchema);

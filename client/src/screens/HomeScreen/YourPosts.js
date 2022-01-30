@@ -33,7 +33,6 @@ const YourPosts = () => {
       } catch (err) {
         const msg = err.response ? err.response.data.message : err;
         alert.show(msg, { type: "error" });
-        console.log(msg);
       }
     }
     fetchAllPosts();
