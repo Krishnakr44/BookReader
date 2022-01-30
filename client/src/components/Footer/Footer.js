@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <>
       <Container fluid className="bg-dark text-white ft py-4">
-        <Row className="footer-text">
+        <Row xs={1} md={3} className="footer-text">
           <Col>
             <p>
               Welcome to 7Book. Sharing Books is made easy and fun with 7Book.

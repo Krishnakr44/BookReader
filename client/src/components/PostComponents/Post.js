@@ -47,8 +47,11 @@ const Post = ({ posts, heading }) => {
                   <u>{post.title}</u>
                 </h2>
               </LinkContainer>
-              <div className="d-flex">
-                <div style={{ width: "30%", marginLeft: "1em" }}>
+              <div className="d-flex postCont">
+                <div
+                  className="postImage"
+                  style={{ width: "30%", marginLeft: "1em" }}
+                >
                   {post.imageUri != undefined ? (
                     <Image fluid src={post.imageUri} style={{}} />
                   ) : null}

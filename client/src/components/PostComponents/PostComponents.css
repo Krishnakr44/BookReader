@@ -8,3 +8,9 @@
 .chat:hover {
   cursor: pointer;
 }
+
+@media (max-width: 850px) {
+  .postCont {
+    flex-direction: column;
+  }
+}

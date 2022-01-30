@@ -53,8 +53,8 @@ const HomeScreen = ({ isAuth }) => {
 
   //Return value
   return (
-    <div className="d-flex">
-      <div className="px-5 posts">
+    <div className="d-flex mainCont">
+      <div className="posts">
         <Tabs
           defaultActiveKey="recentposts"
           id="uncontrolled-tab-example"

@@ -24,7 +24,7 @@ const RegisterScreen = ({ setIsAuth }) => {
       localStorage.setItem("userInfo", JSON.stringify(user.data));
       if (user.status === 201) {
         setIsAuth(true);
-        navigate("/");
+        navigate("/profile");
         alert.show("Registration Successful", { type: "success" });
       }
     } catch (err) {
