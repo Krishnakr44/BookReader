@@ -1,4 +1,4 @@
-# 7Book
+# BookReader
 
 Live Link: https://sevenbook.herokuapp.com/
 ## Description
